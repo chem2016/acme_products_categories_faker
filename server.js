@@ -24,29 +24,18 @@ app.get('/api/categories', (req,res,next)=>{
         .catch(next)
 })
 
-app.post('/api/categories',()=>{
+app.post('/api/categories',(req, res, next)=>{
     Category.createFake()
-        .then(()=>{
-            return Category.findAll()
-        })
-        .then((categories)=>{
-            res.send(categories)
+        .then((company)=>{
+            res.send(company)
         })
         .catch(next)
 })
 
 app.post('/api/categories/:id/products',(req, res, next)=>{
     Product.createFake(req.params.id)
-        .then(()=>{
-            return Category.findAll({
-                where: {
-                    CategoryId: req.params.id
-                }
-            }   
-            )
-        })
-        .then((categories)=>{
-            res.send(categories)
+        .then((product)=>{
+            res.send(product)
         })
         .catch(next)
 })

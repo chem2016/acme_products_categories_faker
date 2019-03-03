@@ -19,13 +19,13 @@ const Product = conn.define('product',{
 Category.hasMany(Product)
 
 Category.createFake = function(){
-    this.create({
+    return this.create({
         name: faker.commerce.department()
     })
 }
 
 Product.createFake = function(categoryId){
-    this.create({
+    return this.create({
         name: faker.commerce.productName(),
         categoryId: categoryId 
     })

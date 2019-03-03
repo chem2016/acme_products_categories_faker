@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import axios from 'axios'
+import List from './List'
 
 class App extends Component{
     constructor(){
@@ -7,16 +8,34 @@ class App extends Component{
         this.state = {
             categories: []
         }
+        this.createCategory = this.createCategory.bind(this);
     }
     componentDidMount(){
         axios.get('/api/categories')
             .then((response)=>{return response.data})
-            .then((categories)=>{console.log(categories)})
+            .then((categories)=>{this.setState({categories})})
+            //.then(()=>{console.log(this.state.categories)})
     }
+
+    createCategory(){
+        console.log('createCategory')
+        axios.post('/api/categories')
+            .then((response)=>{return response.data})
+            .then((category)=>{
+                const categories = this.state.categories
+                categories.push(category)
+                this.setState({categories})
+            })
+    }
+
     render(){
+        const {createCategory} = this
         const categories = this.state.categories
         return (
-            <span > {categories.length} </span>
+            <div>
+                <button onClick={ createCategory }>CreateCategory</button>
+                <List categories={categories} />
+            </div>
         )
     }
 
